@@ -35,9 +35,16 @@ public class BallBehavior : MonoBehaviour {
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (hasStarted && collision.collider.name == "Paddle")
+        if (hasStarted)
         {
-            body.velocity = new Vector2(10*(this.transform.position.x - paddle.transform.position.x), Mathf.Max(body.velocity.y, 8f));
+            if (collision.collider.name == "Paddle")
+            {
+                body.velocity = new Vector2(10 * (this.transform.position.x - paddle.transform.position.x), Mathf.Max(body.velocity.y, 8f));
+            }
+            else if (collision.collider.tag == "Breakable")
+            {
+                GetComponent<AudioSource>().Play();
+            }
         }
     }
 }

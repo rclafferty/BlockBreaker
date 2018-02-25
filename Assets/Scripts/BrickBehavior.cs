@@ -7,8 +7,7 @@ public class BrickBehavior : MonoBehaviour {
 
     [SerializeField]
     Sprite[] hitSprites;// = new Sprite[3];
-
-    [SerializeField]
+    
     public static int numBreakableBricks = 0;
 
     int maxHits;
@@ -16,11 +15,22 @@ public class BrickBehavior : MonoBehaviour {
 
     LevelManager levelManager;
 
+    public AudioClip crackSound;
+    //AudioClip c;
+
 	// Use this for initialization
 	void Start () {
 
-        numBreakableBricks++;
+        //c = Resources.Load<AudioClip>("Sounds/crack");
+        crackSound = Resources.Load<AudioClip>("Sounds/crack");
+
+        //numBreakableBricks++;
         maxHits = Convert.ToInt32(this.gameObject.name[0] - '0');
+
+        if (this.tag == "Breakable")
+        {
+            numBreakableBricks++;
+        }
         
         timesHit = 0;
         levelManager = GameObject.Find("LevelManager").GetComponent<LevelManager>();
@@ -46,12 +56,16 @@ public class BrickBehavior : MonoBehaviour {
 
     void HandleHits()
     {
+        //GetComponent<AudioSource>().Play();
+        AudioSource.PlayClipAtPoint(crackSound, this.transform.position);
+
         timesHit++;
 
         if (timesHit >= maxHits)
         {
-            Destroy(this.gameObject);
             numBreakableBricks--;
+            levelManager.BrickDestroyed();
+            Destroy(this.gameObject);
         }
         else
         {

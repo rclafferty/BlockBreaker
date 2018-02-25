@@ -15,7 +15,11 @@ public class LevelManager : MonoBehaviour {
             LoadNextLevel();
         }
 #endif
-        if (BrickBehavior.numBreakableBricks == 0)
+    }
+
+    public void BrickDestroyed()
+    {
+        if (BrickBehavior.numBreakableBricks <= 0)
         {
             LoadNextLevel();
         }
