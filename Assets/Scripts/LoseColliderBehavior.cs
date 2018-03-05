@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class LoseColliderBehavior : MonoBehaviour {
 
@@ -10,18 +8,20 @@ public class LoseColliderBehavior : MonoBehaviour {
 	void Start () {
         levelManager = GameObject.Find("LevelManager").GetComponent<LevelManager>();
 	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
 
+    /// <summary>
+    /// Handles a lose event
+    /// </summary>
+    /// <param name="c"></param>
     void OnTriggerEnter2D (Collider2D c)
     {
-        //print("Trigger");
+        // If a ball hits this collider, it means the ball fell out of the scene and the player loses
         levelManager.LoadLevel("Lose Screen");
     }
 
+    /// <summary>
+    /// Placeholder method for handling collisions instead of triggers
+    /// </summary>
     void OnCollision2D()
     {
         print("Collision");
